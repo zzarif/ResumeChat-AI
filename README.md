@@ -1,2 +1,5 @@
-# LlamaReply-Chrome-Extension (Under construction)
-Let Llama reply to LinkedIn posts with just a click
+# Resume Chat (Under construction)
+
+RAG Chatbot to chat and connect with your resume
+
+## Build from Source

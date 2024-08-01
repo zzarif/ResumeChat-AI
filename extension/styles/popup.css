@@ -1,0 +1,59 @@
+body {
+  width: 28rem;
+  height: 25rem;
+  background-color: #9b259b;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.7rem;
+  border: 0.2rem solid aliceblue;
+}
+
+.help-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: space-around;
+}
+
+.item-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+h1 {
+  font-family: "Fira Sans Condensed";
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
+}
+
+
+label {
+  font-family: "Fira Sans Condensed";
+  text-align: center;
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: white;
+}
+
+.package-status-banner {
+  width: 90%;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: rgba(240, 248, 255, 0.7);
+  font-size: 1.1rem;
+  display: block;
+  font-weight: 600;
+}
