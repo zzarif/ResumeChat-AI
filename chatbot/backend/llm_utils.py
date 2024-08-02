@@ -36,7 +36,7 @@ callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
 llm = ChatOllama(
     base_url='http://localhost:11434',
-    model="llama3",
+    model="llama2-uncensored",
     temperature=0,
     streaming=True,
     callback_manager=callback_manager

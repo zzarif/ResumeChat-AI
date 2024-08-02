@@ -3,6 +3,7 @@ from docs.vectorizer import save_doc_to_vector_store
 from streamer import stream_response
 from fastapi.responses import StreamingResponse
 from fastapi import status, HTTPException
+from pydantic import BaseModel
 import uvicorn
 
 
@@ -20,9 +21,13 @@ async def upload(file: UploadFile = File(...)):
         )
 
 
+class ChatQuery(BaseModel):
+    query: str
+
+
 @app.post("/chat")
-async def chat(query: str):
-    return StreamingResponse(stream_response(query), media_type="text/event-stream")
+async def chat(chat_query: ChatQuery):
+    return StreamingResponse(stream_response(chat_query.query), media_type="text/event-stream")
 
 
 if __name__ == "__main__":

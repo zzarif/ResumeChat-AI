@@ -3218,18 +3218,15 @@ pymysql = ["pymysql"]
 sqlcipher = ["sqlcipher3_binary"]
 
 [[package]]
-name = "sseclient"
-version = "0.0.27"
-description = "Python client library for reading Server Sent Event streams."
+name = "sseclient-py"
+version = "1.8.0"
+description = "SSE client for Python"
 optional = false
 python-versions = "*"
 files = [
-    {file = "sseclient-0.0.27.tar.gz", hash = "sha256:b2fe534dcb33b1d3faad13d60c5a7c718e28f85987f2a034ecf5ec279918c11c"},
+    {file = "sseclient-py-1.8.0.tar.gz", hash = "sha256:c547c5c1a7633230a38dc599a21a2dc638f9b5c297286b48b46b935c71fac3e8"},
+    {file = "sseclient_py-1.8.0-py2.py3-none-any.whl", hash = "sha256:4ecca6dc0b9f963f8384e9d7fd529bf93dd7d708144c4fb5da0e0a1a926fee83"},
 ]
-
-[package.dependencies]
-requests = ">=2.9"
-six = "*"
 
 [[package]]
 name = "starlette"
@@ -4062,4 +4059,4 @@ test = ["big-O", "importlib-resources", "jaraco.functools", "jaraco.itertools", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "26c27b5bfdce0f29902e9f08848aa958e6d23b712a09784a8626c3fc9b078bda"
+content-hash = "1e6b5b2efb825bb8eedf426d7f866506e44394d8e04a984bbba9ce3e3982a3e2"

@@ -43,10 +43,13 @@ if prompt := st.chat_input("What is up?"):
 
         # Send request to FastAPI backend
         with requests.post("http://localhost:8000/chat", json={"query": prompt}, stream=True) as response:
-            client = sseclient.SSEClient(response)
-            for event in client.events():
-                full_response += event.data
-                message_placeholder.markdown(full_response + "▌")
+            if response.status_code == 200:
+                client = sseclient.SSEClient(response)
+                for event in client.events():
+                    full_response += event.data
+                    message_placeholder.markdown(full_response + "▌")
+            else:
+                st.error(f"Error: {response.status_code} - {response.text}")
 
         message_placeholder.markdown(full_response)
 

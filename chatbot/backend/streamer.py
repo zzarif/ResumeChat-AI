@@ -14,4 +14,4 @@ async def stream_response(query: str) -> AsyncIterable[str]:
     )
 
     async for chunk in rag_chain.astream(query):
-        yield chunk
+        yield f"data: {chunk}\n\n"
