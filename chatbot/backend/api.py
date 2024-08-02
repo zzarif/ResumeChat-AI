@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, UploadFile
 from docs.vectorizer import save_doc_to_vector_store
-from chatbot.streamer import stream_response
+from streamer import stream_response
 from fastapi.responses import StreamingResponse
 from fastapi import status, HTTPException
 import uvicorn

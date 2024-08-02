@@ -13,8 +13,7 @@ uploaded_file = st.file_uploader("Upload a PDF file", type="pdf")
 
 if uploaded_file is not None:
     # Save the file locally
-    dir = os.path.dirname(__file__)
-    with open(os.path.join(dir, os.pardir, 'docs', 'files', uploaded_file.name), "wb") as f:
+    with open(os.path.join(os.path.dirname(__file__), 'backend', 'docs', 'pdfs', uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
 
     # Send the file to the FastAPI backend

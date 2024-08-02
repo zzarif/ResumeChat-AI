@@ -1,0 +1,1 @@
+This is the directory where uploaded `pdf` files are saved for vectorization.

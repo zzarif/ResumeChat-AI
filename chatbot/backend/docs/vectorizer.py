@@ -7,8 +7,8 @@ import os
 def save_doc_to_vector_store(file):
     try:
         # load PDF file
-        dir = os.path.dirname(__file__)
-        file_path = os.path.join(dir, 'files', file.filename)
+        file_path = os.path.join(os.path.dirname(
+            __file__), 'pdfs', file.filename)
         loader = PDFPlumberLoader(file_path)
 
         # split pdf into chunks
@@ -16,7 +16,8 @@ def save_doc_to_vector_store(file):
         chunks = text_splitter.split_documents(docs)
 
         # save to vector store
-        persist_directory = os.path.join(dir, os.pardir, 'db')
+        persist_directory = os.path.join(
+            os.path.dirname(__file__), os.pardir, 'db')
         vector_store = Chroma.from_documents(
             documents=chunks,
             embedding=embedding,
@@ -27,4 +28,5 @@ def save_doc_to_vector_store(file):
         return True
 
     except Exception as e:
+        print(e)
         return False

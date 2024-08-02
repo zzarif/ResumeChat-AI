@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "llama-resume-chatbot"
+version = "0.1.0"
+description = ""
+authors = ["Zibran Zarif Amio <zibran.zarif.amio@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.1"
+uvicorn = "^0.30.4"
+langchain = "^0.2.11"
+langchain-core = "^0.2.27"
+langchain-community = "^0.2.10"
+langchain-text-splitters = "^0.2.2"
+streamlit = "^1.37.0"
+sseclient = "^0.0.27"
+pdfplumber = "^0.11.2"
+chromadb = "^0.5.5"
+protobuf = "<=3.20.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

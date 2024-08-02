@@ -1,7 +1,7 @@
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from docs.retriever import context_retriever
-from chatbot.utils import llm, prompt_template
+from llm_utils import llm, prompt_template
 from typing import AsyncIterable
 
 
