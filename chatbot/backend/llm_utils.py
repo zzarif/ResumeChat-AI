@@ -9,10 +9,11 @@ from langchain_core.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 
-review_template_str = """Your job is to use a person's Resume to answer 
-questions about their skills and experiences. Use the following context to 
-answer questions. Be as detailed as possible, but don't make up any information 
-that's not from the context. If you don't know an answer, say you don't know.
+review_template_str = """
+You are an assistant for question-answering tasks. Use the following 
+pieces of retrieved context to answer the question. If you don't know 
+the answer, just say that you don't know. Use three sentences maximum 
+and keep the answer concise.
 
 {context}
 """
@@ -36,7 +37,7 @@ callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
 llm = ChatOllama(
     base_url='http://localhost:11434',
-    model="llama2-uncensored",
+    model="llama3",
     temperature=0,
     streaming=True,
     callback_manager=callback_manager

@@ -6,8 +6,13 @@ from typing import AsyncIterable
 
 
 async def stream_response(query: str) -> AsyncIterable[str]:
+
+    # retrieve context from query
+    context = context_retriever(query)
+
+    # from rag chain
     rag_chain = (
-        {"context": context_retriever(), "question": RunnablePassthrough()}
+        {"context": lambda x: context, "question": RunnablePassthrough()}
         | prompt_template
         | llm
         | StrOutputParser()

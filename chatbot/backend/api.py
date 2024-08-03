@@ -12,7 +12,7 @@ app = FastAPI()
 
 @app.post("/upload")
 async def upload(file: UploadFile = File(...)):
-    if save_doc_to_vector_store(file):
+    if save_doc_to_vector_store(file) is not None:
         return {'filename': file.filename}
     else:
         raise HTTPException(
