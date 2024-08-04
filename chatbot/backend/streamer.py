@@ -1,10 +1,16 @@
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from docs.retriever import context_retriever
-from llm_utils import llm, prompt_template
+from config.prompts import (
+    chat_prompt_template,
+    ext_prompt_template,
+    query_persona
+)
+from config.llms import llama3
 from typing import AsyncIterable
 
 
+# generate streamed response for chatbot
 async def stream_response(query: str) -> AsyncIterable[str]:
 
     # retrieve context from query
@@ -13,10 +19,27 @@ async def stream_response(query: str) -> AsyncIterable[str]:
     # from rag chain
     rag_chain = (
         {"context": lambda x: context, "question": RunnablePassthrough()}
-        | prompt_template
-        | llm
+        | chat_prompt_template
+        | llama3
         | StrOutputParser()
     )
 
     async for chunk in rag_chain.astream(query):
         yield f"data: {chunk}\n\n"
+
+
+# generate non-streamed response for extension
+async def extension_response(query: str) -> str:
+
+    # retrieve persona (context) from query
+    context = context_retriever(query_persona)
+
+    # from rag chain
+    rag_chain = (
+        {"context": lambda x: context, "question": RunnablePassthrough()}
+        | ext_prompt_template
+        | llama3
+        | StrOutputParser()
+    )
+
+    return rag_chain.invoke(query)
