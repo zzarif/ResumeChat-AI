@@ -13,14 +13,29 @@
     <img src="https://badge.fury.io/js/electron-markdownify.svg"
          alt="Gitter">
   </a>
-  <a href="https://gitter.im/amitmerchant1990/electron-markdownify"><img src="https://badges.gitter.im/amitmerchant1990/electron-markdownify.svg"></a>-->
+  <a href="https://gitter.im/amitmerchant1990/electron-markdownify"><img src="https://badges.gitter.im/amitmerchant1990/electron-markdownify.svg"></a> -->
   <!-- <a href="">
       <img src="https://img.shields.io/badge/website-online-blue.svg">
+  </a> -->
+  <a href="https://github.com/zzarif/Llama-Resume-Chatbot">
+    <img src="https://img.shields.io/github/last-commit/zzarif/Llama-Resume-Chatbot">
   </a>
-  <a href="">
+
+  <!-- <a href="https://fastapi.tiangolo.com/">
+    <img src="https://img.shields.io/badge/fastapi-0.111.1-turquoise">
+  </a> -->
+  <a href="https://www.langchain.com/">
+    <img src="https://img.shields.io/badge/langchain-0.2.11-green">
+  </a>
+  <!-- <a href="">
     <img src="https://img.shields.io/badge/dataset-released-green.svg">
   </a>  -->
-<a href="https://opensource.org/licenses/MIT">
+    <a href="https://ollama.com/download"><img src="https://img.shields.io/badge/ollama-0.3.3-blue">
+  </a>
+  <a href="https://streamlit.io/">
+    <img src="https://img.shields.io/badge/streamlit-1.37.0-red">
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/badge/license-MIT-yellow.svg">
   </a>
 
@@ -38,15 +53,14 @@
 ## 📋 Overview
 
 A Retrieval-Augmented Generation app to chat with Resume and Chrome Extension to connect on LinkedIn. Key features:
+
 - Utilizes open-source embedding model to retrieve context by converting large PDF documents into vector databases.
 - Implements **FastAPI** backend that utilizes **LangChain** to invoke open-source LLMs and produce streamed response.
 - Developed an interactive chatbot with **Streamlit** that uses **SSEClient** to handle streams.
 
-## 🧠 Architecture
+## 💡 Architecture
 
-![RAG Architecture](https://miro.medium.com/v2/resize:fit:4800/format:webp/1*H1AT2nqq-MAf-6vz62TemQ.png)
-
-<p align="center">Image Source: <a href="https://medium.com/@vectorizeio/which-is-the-best-vector-database-for-rag-applications-e559822aeccd">Medium</a></p>
+![RAG Architecture](architecture.png)
 
 ## 💬 Chatbot
 
@@ -111,6 +125,6 @@ python chatbot/backend/api.py
 streamlit run chatbot/main.py
 ```
 
-## 🌐 Contact:
+## ✉️ Contact:
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/zibran-zarif-amio-b82717263/) [![Mail](https://img.shields.io/badge/Gmail-EA4335?logo=gmail&logoColor=fff)](mailto:zibran.zarif.amio@gmail.com)
