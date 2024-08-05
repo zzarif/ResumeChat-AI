@@ -18,10 +18,7 @@ document.addEventListener("focusin", (e) => {
       const btnDislike = getResumeChatButton(1, " 👎 "); // dislike
       const btnSupport = getResumeChatButton(2, "❤️ Support"); // support
       const btnJoke = getResumeChatButton(3, "😂 Funny"); //joke
-      const btnIdea = getResumeChatButton(4, "💡 Thought"); // idea
-      const btnQuestion = getResumeChatButton(5, "❓ Question"); // question
-      const btnCustomPrompt = getResumeChatButton(6, "Custom Prompt");
-      btnCustomPrompt.disabled = true;
+      const btnQuestion = getResumeChatButton(4, "❓ Question"); // question
 
       // button parent conatiner
       const container = document.createElement("div");
@@ -32,18 +29,9 @@ document.addEventListener("focusin", (e) => {
       container.appendChild(btnDislike);
       container.appendChild(btnSupport);
       container.appendChild(btnJoke);
-      container.appendChild(btnIdea);
       container.appendChild(btnQuestion);
-      container.appendChild(btnCustomPrompt);
 
       form_comments.appendChild(container);
-
-      // if empty text then don't allow complete/regen
-      viewOnFocus.addEventListener("keyup", (e) => {
-        if (viewOnFocus.textContent && viewOnFocus.textContent.trim())
-          btnCustomPrompt.disabled = false;
-        else btnCustomPrompt.disabled = true;
-      });
     }
   }
 });
@@ -94,7 +82,7 @@ function getResumeChatButton(which, text) {
 async function generateComment(viewClicked, type) {
   flipButtonState(viewClicked, true);
   const lnkdnAPIBaseURL =
-    "https://replymind-server-09f7.onrender.com/linkedin/";
+    "https://api.server.com/linkedin/";
   try {
     const view_feed_update = viewClicked.closest("div.feed-shared-update-v2");
     const view_reusable_search = viewClicked.closest(
@@ -133,100 +121,50 @@ async function generateComment(viewClicked, type) {
 
     // COMMENTING to the post
     if (viewClicked.closest("article.comments-comment-item") === null) {
-      // custom comment
-      if (type === 6) {
-        const customPrompt = contentEditableDiv.textContent;
-        await fetch(lnkdnAPIBaseURL + "custom", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            poster: poster,
-            caption: caption,
-            customPrompt: customPrompt,
-          }),
+      // default comment (type 0 to 4)
+      await fetch(lnkdnAPIBaseURL + "default", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          poster: poster,
+          caption: caption,
+          type: type,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // https://stackoverflow.com/a/72935050
+          contentEditableDiv.focus();
+          document.execCommand("selectAll", false);
+          document.execCommand("delete", false);
+          document.execCommand("insertText", false, data.comment);
         })
-          .then((res) => res.json())
-          .then((data) => {
-            // https://stackoverflow.com/a/72935050
-            contentEditableDiv.focus();
-            document.execCommand("selectAll", false);
-            document.execCommand("delete", false);
-            document.execCommand("insertText", false, data.comment);
-          })
-          .finally(() => removeAnimation(contentEditableDiv));
-      }
-      // default comment (type 0 to 5)
-      else {
-        await fetch(lnkdnAPIBaseURL + "default", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            poster: poster,
-            caption: caption,
-            type: type,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            // https://stackoverflow.com/a/72935050
-            contentEditableDiv.focus();
-            document.execCommand("selectAll", false);
-            document.execCommand("delete", false);
-            document.execCommand("insertText", false, data.comment);
-          })
-          .finally(() => removeAnimation(contentEditableDiv));
-      }
+        .finally(() => removeAnimation(contentEditableDiv));
     }
 
     // REPLYING to a comment
     else {
-      // custom reply
-      if (type === 6) {
-        const customPrompt = contentEditableDiv.textContent;
-        await fetch(lnkdnAPIBaseURL + "custom-reply", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            poster: poster,
-            caption: caption,
-            commenter: commenter,
-            comment: comment,
-            customPrompt: customPrompt,
-          }),
+      // default reply (type 0 to 4)
+      await fetch(lnkdnAPIBaseURL + "default-reply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          poster: poster,
+          caption: caption,
+          commenter: commenter,
+          comment: comment,
+          type: type,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // https://stackoverflow.com/a/72935050
+          contentEditableDiv.focus();
+          document.execCommand("selectAll", false);
+          document.execCommand("delete", false);
+          document.execCommand("insertText", false, data.comment);
         })
-          .then((res) => res.json())
-          .then((data) => {
-            // https://stackoverflow.com/a/72935050
-            contentEditableDiv.focus();
-            document.execCommand("selectAll", false);
-            document.execCommand("delete", false);
-            document.execCommand("insertText", false, data.comment);
-          })
-          .finally(() => removeAnimation(contentEditableDiv));
-      }
-      // default reply (type 0 to 5)
-      else {
-        await fetch(lnkdnAPIBaseURL + "default-reply", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            poster: poster,
-            caption: caption,
-            commenter: commenter,
-            comment: comment,
-            type: type,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            // https://stackoverflow.com/a/72935050
-            contentEditableDiv.focus();
-            document.execCommand("selectAll", false);
-            document.execCommand("delete", false);
-            document.execCommand("insertText", false, data.comment);
-          })
-          .finally(() => removeAnimation(contentEditableDiv));
-      }
+        .finally(() => removeAnimation(contentEditableDiv));
     }
   } catch (err) {
     alert("RESUME_CHAT: Please try again after a minute!");
