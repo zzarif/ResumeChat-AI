@@ -54,27 +54,29 @@
 
 A Retrieval-Augmented Generation (RAG) app for HRs to chat with Applicants' Resume and Chrome extension to connect on LinkedIn. Key features:
 
-- [**Chatbot**](#-chatbot):
-  1. Upload applicants' Resumes as PDF files via File Uploader (accepts multiple files).
-  2. Chat and ask questions about the Resumes to gain valuable insights about the candidates.
-  3. It is developed with `streamlit` and uses `sseclient` to generate streamed response.
+1. [**Chatbot**](#-chatbot):
+  - Upload applicants' Resumes as PDF files via File Uploader (accepts multiple files).
+  - Chat and ask questions about the Resumes to gain valuable insights about the candidates.
+  - It is developed with `streamlit` and uses `sseclient` to generate streamed response.
 
-- [**Chrome Extension**](#-chrome-extension):
-  1. Load the chrome extension and let AI reply to LinkedIn posts with just a click!
-  2. It is developed with pure `javascript` and uses the same API as chatbot to complete response.
+2. [**Chrome Extension**](#-chrome-extension):
+  - Load the chrome extension and let AI reply to LinkedIn posts with just a click!
+  - It is developed with pure `javascript` and uses the same API as chatbot to complete response.
 
-- [**Backend**](#%EF%B8%8F-build-from-source):
-  1. Utilizes `nomic-embed-text` embedding model to split and convert the PDF docs to `chromadb` vector database.
-  2. Retrieves contexts from chat queries and invokes local `llama3` LLM to generate contextually accurate response.
-  3. The backend was developed with `fastapi` and `langchain` to produce streamed output.
+3. [**Backend**](#%EF%B8%8F-build-from-source):
+  - Utilizes `nomic-embed-text` embedding model to split and convert the PDF docs to `chromadb` vector database.
+  - Retrieves contexts from chat queries and invokes local `llama3` LLM to generate contextually accurate response.
+  - The backend was developed with `fastapi` and `langchain` to produce streamed output.
 
 ## 💡 Architecture
 
 ![RAG Architecture](architecture.png)
 
 ## 💬 Chatbot
+(Demo coming soon)
 
 ## 🌐 Chrome Extension
+(Demo coming soon)
 
 ## ⚙️ Build from Source
 
@@ -107,8 +109,8 @@ Note: If this command results in an error, make sure to quit any running Ollama 
 1. Clone the repository
 
 ```bash
-git clone https://github.com/zzarif/Llama-Resume-Chatbot.git
-cd Llama-Resume-Chatbot/
+git clone https://github.com/zzarif/ResumeChat-AI.git
+cd ResumeChat-AI/
 ```
 
 2. Install necessary dependencies
