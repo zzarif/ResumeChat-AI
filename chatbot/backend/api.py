@@ -3,12 +3,21 @@ from docs.uploader import save_uploaded_files
 from docs.vectorizer import save_doc_to_vector_store
 from fastapi.responses import JSONResponse, StreamingResponse
 from streamer import stream_response, extension_response
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List
 import uvicorn
 
 
 app = FastAPI()
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.post("/upload")
@@ -34,9 +43,15 @@ async def chat(chat_query: ChatQuery):
     return StreamingResponse(stream_response(chat_query.query), media_type="text/event-stream")
 
 
+class ExtensionQuery(BaseModel):
+    context: str
+    query: str
+
+
 @app.post("/extension")
-async def extension(ext_query: ChatQuery):
-    return {'message': extension_response(ext_query.query)}
+async def extension(ext_query: ExtensionQuery):
+    result = await extension_response(ext_query.context, ext_query.query)
+    return {'message': result}
 
 
 if __name__ == "__main__":

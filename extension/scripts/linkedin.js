@@ -81,8 +81,7 @@ function getResumeChatButton(which, text) {
  */
 async function generateComment(viewClicked, type) {
   flipButtonState(viewClicked, true);
-  const lnkdnAPIBaseURL =
-    "https://api.server.com/linkedin/";
+  const lnkdnAPIBaseURL = "http://localhost:8000/extension";
   try {
     const view_feed_update = viewClicked.closest("div.feed-shared-update-v2");
     const view_reusable_search = viewClicked.closest(
@@ -119,57 +118,77 @@ async function generateComment(viewClicked, type) {
 
     showLoadingAnimation(contentEditableDiv);
 
+    var context, query;
     // COMMENTING to the post
     if (viewClicked.closest("article.comments-comment-item") === null) {
-      // default comment (type 0 to 4)
-      await fetch(lnkdnAPIBaseURL + "default", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          poster: poster,
-          caption: caption,
-          type: type,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // https://stackoverflow.com/a/72935050
-          contentEditableDiv.focus();
-          document.execCommand("selectAll", false);
-          document.execCommand("delete", false);
-          document.execCommand("insertText", false, data.comment);
-        })
-        .finally(() => removeAnimation(contentEditableDiv));
+      // build query
+      context = `
+      """${poster}""" posted """${caption}""".
+
+      ${getReaction_fromType(type, true)}`;
+
+      query = `
+      Now based on the reaction write a reply to
+      the poster using maximum 2-3 sentences.
+      `;
     }
 
     // REPLYING to a comment
     else {
-      // default reply (type 0 to 4)
-      await fetch(lnkdnAPIBaseURL + "default-reply", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          poster: poster,
-          caption: caption,
-          commenter: commenter,
-          comment: comment,
-          type: type,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // https://stackoverflow.com/a/72935050
-          contentEditableDiv.focus();
-          document.execCommand("selectAll", false);
-          document.execCommand("delete", false);
-          document.execCommand("insertText", false, data.comment);
-        })
-        .finally(() => removeAnimation(contentEditableDiv));
+      // build query
+      context = `
+      """${poster}""" posted """${caption}""".
+
+      """${commenter}""" commented """${comment}""".
+
+      ${getReaction_fromType(type, false)}`;
+
+      query = `
+      Now based on the reaction write a reply to
+      the commenter using maximum 2-3 sentences.
+      `;
     }
+
+    console.log("Context: " + context);
+    console.log("Query: " + query);
+
+    await fetch(lnkdnAPIBaseURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        context: context,
+        query: query,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // https://stackoverflow.com/a/72935050
+        contentEditableDiv.focus();
+        document.execCommand("selectAll", false);
+        document.execCommand("delete", false);
+        document.execCommand("insertText", false, data.message);
+      })
+      .finally(() => removeAnimation(contentEditableDiv));
   } catch (err) {
     alert("RESUME_CHAT: Please try again after a minute!");
   } finally {
     flipButtonState(viewClicked, false);
+  }
+}
+
+function getReaction_fromType(type, isPost) {
+  what = isPost ? "post" : "comment";
+  switch (type) {
+    case 0:
+      return `You agree with the ${what}.`;
+    case 1:
+      return `You don't like the ${what}. Respectfully disagree.`;
+    case 2:
+      return `You really like and support the ${what}.`;
+    case 3:
+      return `You find the ${what} to be very funny.`;
+    case 4:
+      return `You have questions about the ${what}.`;
   }
 }
 

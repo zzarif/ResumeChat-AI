@@ -33,16 +33,12 @@ chat_prompt_template = ChatPromptTemplate(
 
 #################################### EXTENSION PROMPTS #########################################
 
-query_persona = "Summarize the candidate's bio."
-
 ext_template_str = """
 You're an expert in your field who's experienced in creating engagement on LinkedIn.
 Your goal is to maximize engagement between you, the original poster, and other people 
-engaging with the post. You have a specific user persona that you need to maintain when you 
-interact. You'll be provided with the user persona of the person you need to represent, the 
-name of the poster, the content of the post itself and the intended emotion for the response.
+engaging with the post. You'll be provided with the name of the poster, the content 
+of the post itself and the intended emotion for the response.
 
-User persona:
 {context}
 """
 

@@ -2,11 +2,11 @@
   <br>
   <!-- <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.png" alt="Markdownify" width="200"></a>
   <br> -->
-  Llama Resume Chatbot (🛠️ Under Construction)
+  ResumeChat AI
   <br>
 </h1>
 
-<h4 align="center">A RAG chatbot to chat with Resume and extension to connect on LinkedIn</h4>
+<h4 align="center">A RAG app to chat with Applicants' Resume and Chrome extension to connect on LinkedIn.</h4>
 
 <p align="center">
   <!-- <a href="https://badge.fury.io/js/electron-markdownify">
@@ -17,8 +17,8 @@
   <!-- <a href="">
       <img src="https://img.shields.io/badge/website-online-blue.svg">
   </a> -->
-  <a href="https://github.com/zzarif/Llama-Resume-Chatbot">
-    <img src="https://img.shields.io/github/last-commit/zzarif/Llama-Resume-Chatbot">
+  <a href="https://github.com/zzarif/ResumeChat-AI">
+    <img src="https://img.shields.io/github/last-commit/zzarif/ResumeChat-AI">
   </a>
 
   <!-- <a href="https://fastapi.tiangolo.com/">
@@ -52,11 +52,21 @@
 
 ## 📋 Overview
 
-A Retrieval-Augmented Generation app to chat with Resume and Chrome Extension to connect on LinkedIn. Key features:
+A Retrieval-Augmented Generation (RAG) app for HRs to chat with Applicants' Resume and Chrome extension to connect on LinkedIn. Key features:
 
-- Utilizes open-source embedding model to retrieve context by converting large PDF documents into vector databases.
-- Implements **FastAPI** backend that utilizes **LangChain** to invoke open-source LLMs and produce streamed response.
-- Developed an interactive chatbot with **Streamlit** that uses **SSEClient** to handle streams.
+- [**Chatbot**](#-chatbot):
+  1. Upload applicants' Resumes as PDF files via File Uploader (accepts multiple files).
+  2. Chat and ask questions about the Resumes to gain valuable insights about the candidates.
+  3. It is developed with `streamlit` and uses `sseclient` to generate streamed response.
+
+- [**Chrome Extension**](#-chrome-extension):
+  1. Load the chrome extension and let AI reply to LinkedIn posts with just a click!
+  2. It is developed with pure `javascript` and uses the same API as chatbot to complete response.
+
+- [**Backend**](#%EF%B8%8F-build-from-source):
+  1. Utilizes `nomic-embed-text` embedding model to split and convert the PDF docs to `chromadb` vector database.
+  2. Retrieves contexts from chat queries and invokes local `llama3` LLM to generate contextually accurate response.
+  3. The backend was developed with `fastapi` and `langchain` to produce streamed output.
 
 ## 💡 Architecture
 
@@ -124,6 +134,16 @@ python chatbot/backend/api.py
 ```bash
 streamlit run chatbot/main.py
 ```
+
+### Load Chrome Extension
+
+1. Go to `chrome://extensions/`, or, *Chrome ▶ Manage Extensions*
+2. Turn on the Developer mode
+3. Click *Load Unpacked*
+4. Select the [extension](extension) directory
+5. Go to `https://www.linkedin.com/feed/` and start commenting!
+
+Note: Everytime you make changes to the extension code you must first `⟳` **reload** it from *Manage Extensions* and then `⟳` **reload** `https://www.linkedin.com/feed/`
 
 ## ✉️ Contact:
 

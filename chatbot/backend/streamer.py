@@ -4,7 +4,6 @@ from docs.retriever import context_retriever
 from config.prompts import (
     chat_prompt_template,
     ext_prompt_template,
-    query_persona
 )
 from config.llms import llama3
 from typing import AsyncIterable
@@ -29,10 +28,7 @@ async def stream_response(query: str) -> AsyncIterable[str]:
 
 
 # generate non-streamed response for extension
-async def extension_response(query: str) -> str:
-
-    # retrieve persona (context) from query
-    context = context_retriever(query_persona)
+async def extension_response(context: str, query: str) -> str:
 
     # from rag chain
     rag_chain = (
