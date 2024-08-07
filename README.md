@@ -47,7 +47,7 @@
   <a href="#-chatbot">Chatbot</a> •
   <a href="#-chrome-extension">Chrome Extension</a> •
   <a href="#%EF%B8%8F-build-from-source">Build from Source</a> •
-  <a href="#-contact">Contact</a>
+  <a href="#%EF%B8%8F-contact">Contact</a>
 </p>
 
 ## 📋 Overview
