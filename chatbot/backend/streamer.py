@@ -24,7 +24,8 @@ async def stream_response(query: str) -> AsyncIterable[str]:
     )
 
     async for chunk in rag_chain.astream(query):
-        yield f"data: {chunk}\n\n"
+        encoded_chunk = chunk.replace('\n', '\\n')
+        yield f"data: {encoded_chunk}\n\n"
 
 
 # generate non-streamed response for extension

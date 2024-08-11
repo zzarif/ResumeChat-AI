@@ -33,7 +33,7 @@
     <a href="https://ollama.com/download"><img src="https://img.shields.io/badge/ollama-0.3.3-blue">
   </a>
   <a href="https://streamlit.io/">
-    <img src="https://img.shields.io/badge/streamlit-1.37.0-red">
+    <img src="https://img.shields.io/badge/streamlit-1.37.1-red">
   </a>
   <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/badge/license-MIT-yellow.svg">

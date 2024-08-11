@@ -11,7 +11,7 @@ def context_retriever(query):
                           embedding_function=embedding)
 
     # semantic search for query
-    docs_chroma = vector_store.similarity_search_with_score(query=query, k=5)
+    docs_chroma = vector_store.similarity_search_with_score(query=query, k=10)
 
     # format to form context
     context = "\n\n".join([doc.page_content for doc, _score in docs_chroma])

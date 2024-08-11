@@ -1,13 +1,15 @@
 import streamlit as st
 import requests
 import sseclient
+import html
 
 # st.set_page_config(layout="wide")
 
-st.title("Llama Resume Chatbot")
+st.title("ResumeChat AI")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
 
 def validate_files(uploaded_files):
     invalid_files = []
@@ -17,6 +19,7 @@ def validate_files(uploaded_files):
         elif file.size > 20 * 1024 * 1024:  # 20MB in bytes
             invalid_files.append((file.name, "Exceeds 20MB limit"))
     return invalid_files
+
 
 # Sidebar for file upload
 with st.sidebar:
@@ -38,23 +41,28 @@ with st.sidebar:
             st.sidebar.error(error_message)
         else:
             files_to_upload = [("files", file) for file in uploaded_files]
-            
+
             with st.spinner('Retrieving context... Please wait.'):
                 try:
-                    response = requests.post("http://localhost:8000/upload", files=files_to_upload)
+                    response = requests.post(
+                        "http://localhost:8000/upload", files=files_to_upload)
                     response.raise_for_status()
-                    
+
                     result = response.json()
                     if result["status"] == "success":
                         if result["conversion_status"]:
-                            st.sidebar.success("Context retrieved successfully.")
+                            st.sidebar.success(
+                                "Context retrieved successfully.")
                         else:
-                            st.sidebar.error("Error occurred during vector conversion.")
+                            st.sidebar.error(
+                                "Error occurred during vector conversion.")
                     else:
-                        st.sidebar.error(f"Error uploading files: {result['message']}")
-                
+                        st.sidebar.error(f"Error uploading files: {
+                                         result['message']}")
+
                 except requests.RequestException as e:
-                    st.sidebar.error(f"Error communicating with the server: {str(e)}")
+                    st.sidebar.error(
+                        f"Error communicating with the server: {str(e)}")
 
 # Main chat interface
 for message in st.session_state.messages:
@@ -77,14 +85,23 @@ if prompt := st.chat_input("What is up?"):
                     if response.status_code == 200:
                         client = sseclient.SSEClient(response)
                         for event in client.events():
-                            full_response += event.data
-                            message_placeholder.markdown(full_response + "▌")
+                            # Decode the newlines
+                            chunk = event.data.replace('\\n', '\n')
+                            full_response += chunk
+                            # Use HTML to preserve formatting
+                            formatted_response = html.escape(
+                                full_response).replace('\n', '<br>')
+                            message_placeholder.markdown(
+                                formatted_response + "▌", unsafe_allow_html=True)
                     else:
-                        st.error(f"Error: {response.status_code} - {response.text}")
+                        st.error(
+                            f"Error: {response.status_code} - {response.text}")
             except requests.RequestException as e:
                 st.error(f"Error communicating with the server: {str(e)}")
 
-        message_placeholder.markdown(full_response)
+        # Final update without the cursor
+        message_placeholder.markdown(html.escape(full_response).replace(
+            '\n', '<br>'), unsafe_allow_html=True)
 
     st.session_state.messages.append(
         {"role": "assistant", "content": full_response})
