@@ -1,6 +1,6 @@
 body {
   width: 28rem;
-  height: 25rem;
+  height: 20rem;
   background-color: #9b259b;
   margin: 0;
   padding: 0;
@@ -56,4 +56,5 @@ label {
   font-size: 1.1rem;
   display: block;
   font-weight: 600;
+  text-align: center;
 }

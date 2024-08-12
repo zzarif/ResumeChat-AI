@@ -39,4 +39,4 @@ async def extension_response(context: str, query: str) -> str:
         | StrOutputParser()
     )
 
-    return rag_chain.invoke(query)
+    return rag_chain.invoke(query).strip('"')
