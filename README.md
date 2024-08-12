@@ -76,7 +76,9 @@ A Retrieval-Augmented Generation (RAG) app for HRs to chat with Applicants' Resu
 (Demo coming soon)
 
 ## 🌐 Chrome Extension
-(Demo coming soon)
+
+https://github.com/user-attachments/assets/81a8f166-cb0e-4df8-8664-62e2f83bae84
+
 
 ## ⚙️ Build from Source
 
