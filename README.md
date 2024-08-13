@@ -68,16 +68,17 @@ A Retrieval-Augmented Generation (RAG) app for HRs to chat with Applicants' Resu
   - Retrieves contexts from chat queries and invokes local `llama3` LLM to generate contextually accurate response.
   - The backend was developed with `fastapi` and `langchain` to produce streamed output.
 
-## 💡 Architecture
-
-![RAG Architecture](architecture.png)
-
 ## 💬 Chatbot
-(Demo coming soon)
+
+https://github.com/user-attachments/assets/ee61e26a-6091-43d7-ac6c-618720adf585
 
 ## 🌐 Chrome Extension
 
 https://github.com/user-attachments/assets/81a8f166-cb0e-4df8-8664-62e2f83bae84
+
+## 💡 Architecture
+
+![RAG Architecture](architecture.png)
 
 
 ## ⚙️ Build from Source
