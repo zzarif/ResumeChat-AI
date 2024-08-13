@@ -5,7 +5,7 @@ from config.prompts import (
     chat_prompt_template,
     ext_prompt_template,
 )
-from config.llms import llama3
+from config.llms import mistral
 from typing import AsyncIterable
 
 
@@ -19,7 +19,7 @@ async def stream_response(query: str) -> AsyncIterable[str]:
     rag_chain = (
         {"context": lambda x: context, "question": RunnablePassthrough()}
         | chat_prompt_template
-        | llama3
+        | mistral
         | StrOutputParser()
     )
 
@@ -35,7 +35,7 @@ async def extension_response(context: str, query: str) -> str:
     rag_chain = (
         {"context": lambda x: context, "question": RunnablePassthrough()}
         | ext_prompt_template
-        | llama3
+        | mistral
         | StrOutputParser()
     )
 

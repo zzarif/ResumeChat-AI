@@ -1,24 +1,28 @@
 import streamlit as st
 import requests
 import sseclient
-import html
+from helper import (
+    validate_files,
+    format_response
+)
 
 # st.set_page_config(layout="wide")
 
 st.title("ResumeChat AI")
 
+st.markdown("""
+    <style>
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
-
-
-def validate_files(uploaded_files):
-    invalid_files = []
-    for file in uploaded_files:
-        if file.type != "application/pdf":
-            invalid_files.append((file.name, "Not a PDF file"))
-        elif file.size > 20 * 1024 * 1024:  # 20MB in bytes
-            invalid_files.append((file.name, "Exceeds 20MB limit"))
-    return invalid_files
 
 
 # Sidebar for file upload
@@ -44,30 +48,31 @@ with st.sidebar:
 
             with st.spinner('Retrieving context... Please wait.'):
                 try:
-                    response = requests.post(
-                        "http://localhost:8000/upload", files=files_to_upload)
-                    response.raise_for_status()
+                    with requests.post("http://localhost:8000/upload", files=files_to_upload) as response:
+                        response.raise_for_status()
 
-                    result = response.json()
-                    if result["status"] == "success":
-                        if result["conversion_status"]:
-                            st.sidebar.success(
-                                "Context retrieved successfully.")
+                        result = response.json()
+                        if result["status"] == "success":
+                            if result["conversion_status"]:
+                                st.sidebar.success(
+                                    "Context retrieved successfully.")
+                            else:
+                                st.sidebar.error(
+                                    "Error occurred during vector conversion.")
                         else:
-                            st.sidebar.error(
-                                "Error occurred during vector conversion.")
-                    else:
-                        st.sidebar.error(f"Error uploading files: {
-                                         result['message']}")
+                            st.sidebar.error(f"Error uploading files: {
+                                            result['message']}")
 
                 except requests.RequestException as e:
                     st.sidebar.error(
                         f"Error communicating with the server: {str(e)}")
 
+
 # Main chat interface
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
+
 
 if prompt := st.chat_input("What is up?"):
     st.session_state.messages.append({"role": "user", "content": prompt})
@@ -80,19 +85,19 @@ if prompt := st.chat_input("What is up?"):
 
         with st.spinner("Thinking..."):
             try:
-                # Send request to FastAPI backend
                 with requests.post("http://localhost:8000/chat", json={"query": prompt}, stream=True) as response:
                     if response.status_code == 200:
                         client = sseclient.SSEClient(response)
                         for event in client.events():
-                            # Decode the newlines
                             chunk = event.data.replace('\\n', '\n')
                             full_response += chunk
-                            # Use HTML to preserve formatting
-                            formatted_response = html.escape(
-                                full_response).replace('\n', '<br>')
+
+                            # Format the response with cursor
+                            formatted_response = format_response(
+                                full_response, include_cursor=True)
+
                             message_placeholder.markdown(
-                                formatted_response + "▌", unsafe_allow_html=True)
+                                formatted_response, unsafe_allow_html=True)
                     else:
                         st.error(
                             f"Error: {response.status_code} - {response.text}")
@@ -100,8 +105,8 @@ if prompt := st.chat_input("What is up?"):
                 st.error(f"Error communicating with the server: {str(e)}")
 
         # Final update without the cursor
-        message_placeholder.markdown(html.escape(full_response).replace(
-            '\n', '<br>'), unsafe_allow_html=True)
+        message_placeholder.markdown(format_response(
+            full_response), unsafe_allow_html=True)
 
     st.session_state.messages.append(
         {"role": "assistant", "content": full_response})
