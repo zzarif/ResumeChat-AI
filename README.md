@@ -1,7 +1,9 @@
 <h1 align="center">
   <br>
-  <!-- <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.png" alt="Markdownify" width="200"></a>
-  <br> -->
+  <a href="https://github.com/zzarif/ResumeChat-AI">
+    <img alt="ResumeChat AI" src="./extension/images/logo-128x128.png">
+  <a>
+  <br>
   ResumeChat AI
   <br>
 </h1>
@@ -43,9 +45,9 @@
 
 <p align="center">
   <a href="#-overview">Overview</a> •
-  <a href="#-architecture">Architecture</a> •
   <a href="#-chatbot">Chatbot</a> •
   <a href="#-chrome-extension">Chrome Extension</a> •
+  <a href="#-architecture">Architecture</a> •
   <a href="#%EF%B8%8F-build-from-source">Build from Source</a> •
   <a href="#%EF%B8%8F-contact">Contact</a>
 </p>
@@ -55,24 +57,27 @@
 A Retrieval-Augmented Generation (RAG) app for HRs to chat with Applicants' Resume and Chrome extension to connect on LinkedIn. Key features:
 
 1. [**Chatbot**](#-chatbot):
-  - Upload applicants' Resumes as PDF files via File Uploader (accepts multiple files).
-  - Chat and ask questions about the Resumes to gain valuable insights about the candidates.
-  - It is developed with `streamlit` and uses `sseclient` to generate streamed response.
+
+- Upload applicants' Resumes as PDF files via File Uploader (accepts multiple files).
+- Chat and ask questions about the Resumes to gain valuable insights about the candidates.
+- It is developed with `streamlit` and uses `sseclient` to generate streamed response.
 
 2. [**Chrome Extension**](#-chrome-extension):
-  - Load the chrome extension and let AI reply to LinkedIn posts with just a click!
-  - It is developed with pure `javascript` and uses the same API as chatbot to complete response.
+
+- Load the chrome extension and let AI reply to LinkedIn posts with just a click!
+- It is developed with pure `javascript` and uses the same API as chatbot to complete response.
 
 3. [**Backend**](#%EF%B8%8F-build-from-source):
-  - Utilizes `nomic-embed-text` embedding model to split and convert the PDF docs to `chromadb` vector database.
-  - Retrieves contexts from chat queries and invokes local `llama3` LLM to generate contextually accurate response.
-  - The backend was developed with `fastapi` and `langchain` to produce streamed output.
 
-## 💬 Chatbot
+- Utilizes `nomic-embed-text` embedding model to split and convert the PDF docs to `chromadb` vector database.
+- Retrieves contexts from chat queries and invokes local `llama3` LLM to generate contextually accurate response.
+- The backend was developed with `fastapi` and `langchain` to produce streamed output.
+
+### 💬 Chatbot
 
 https://github.com/user-attachments/assets/ee61e26a-6091-43d7-ac6c-618720adf585
 
-## 🌐 Chrome Extension
+### 🌐 Chrome Extension
 
 https://github.com/user-attachments/assets/81a8f166-cb0e-4df8-8664-62e2f83bae84
 
@@ -80,26 +85,19 @@ https://github.com/user-attachments/assets/81a8f166-cb0e-4df8-8664-62e2f83bae84
 
 ![RAG Architecture](architecture.png)
 
-
 ## ⚙️ Build from Source
 
 ### Serve Ollama
 
 1. Download and install **Ollama** from https://ollama.com/download
 
-2. Pull required open-source LLMs (here we use [`llama3`](https://ollama.com/library/llama3), you can use other models like [`mistral`](https://ollama.com/library/mistral), [`llama2-uncensored`](https://ollama.com/library/llama2-uncensored), etc.)
+2. Pull required open-source LLMs (here we use [`mistral`](https://ollama.com/library/llama3), you can use other models like [`llama3`](https://ollama.com/library/mistral), [`llama2-uncensored`](https://ollama.com/library/llama2-uncensored), etc.)
 
 ```bash
-ollama pull llama3
+ollama pull mistral
 ```
 
-3. Pull required embedding models (here we use [`nomic-embed-text`](https://ollama.com/library/nomic-embed-text))
-
-```bash
-ollama pull nomic-embed-text
-```
-
-4. Serve Ollama locally (by default Ollama is served from `http://localhost:11434`)
+3. Serve Ollama locally (by default Ollama is served from `http://localhost:11434`)
 
 ```bash
 ollama serve
@@ -142,13 +140,13 @@ streamlit run chatbot/main.py
 
 ### Load Chrome Extension
 
-1. Go to `chrome://extensions/`, or, *Chrome ▶ Manage Extensions*
+1. Go to `chrome://extensions/`, or, _Chrome ▶ Manage Extensions_
 2. Turn on the Developer mode
-3. Click *Load Unpacked*
+3. Click _Load Unpacked_
 4. Select the [extension](extension) directory
 5. Go to `https://www.linkedin.com/feed/` and start commenting!
 
-Note: Everytime you make changes to the extension code you must first `⟳` **reload** it from *Manage Extensions* and then `⟳` **reload** `https://www.linkedin.com/feed/`
+Note: Everytime you make changes to the extension code you must first `⟳` **reload** it from _Manage Extensions_ and then `⟳` **reload** `https://www.linkedin.com/feed/`
 
 ## ✉️ Contact:
 
