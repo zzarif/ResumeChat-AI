@@ -54,32 +54,33 @@
 
 ## 📋 Overview
 
-A Retrieval-Augmented Generation (RAG) app for HRs to chat with Applicants' Resume and Chrome extension to connect on LinkedIn. Key features:
+A Retrieval-Augmented Generation (RAG) app for HRs to chat with Applicants' Resume and Chrome extension to connect on LinkedIn.
 
-1. [**Chatbot**](#-chatbot):
+
+## 💬 Chatbot
+
+https://github.com/user-attachments/assets/ee61e26a-6091-43d7-ac6c-618720adf585
+
+#### Frontend Features
 
 - Upload applicants' Resumes as PDF files via File Uploader (accepts multiple files).
 - Chat and ask questions about the Resumes to gain valuable insights about the candidates.
 - It is developed with `streamlit` and uses `sseclient` to generate streamed response.
 
-2. [**Chrome Extension**](#-chrome-extension):
+#### Backend Features
+
+- Utilizes [`all-MiniLM-L6-v2`](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) embedding model to split and convert the PDF docs to `chromadb` vector database.
+- Retrieves contexts from chat queries and uses Ollama LLMs to generate contextually accurate response.
+- The backend was developed with `fastapi` and `langchain` to produce streamed output.
+
+## 🌐 Chrome Extension
+
+https://github.com/user-attachments/assets/81a8f166-cb0e-4df8-8664-62e2f83bae84
+
+#### Key Features
 
 - Load the chrome extension and let AI reply to LinkedIn posts with just a click!
 - It is developed with pure `javascript` and uses the same API as chatbot to complete response.
-
-3. [**Backend**](#%EF%B8%8F-build-from-source):
-
-- Utilizes `nomic-embed-text` embedding model to split and convert the PDF docs to `chromadb` vector database.
-- Retrieves contexts from chat queries and invokes local `llama3` LLM to generate contextually accurate response.
-- The backend was developed with `fastapi` and `langchain` to produce streamed output.
-
-### 💬 Chatbot
-
-https://github.com/user-attachments/assets/ee61e26a-6091-43d7-ac6c-618720adf585
-
-### 🌐 Chrome Extension
-
-https://github.com/user-attachments/assets/81a8f166-cb0e-4df8-8664-62e2f83bae84
 
 ## 💡 Architecture
 
