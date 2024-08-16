@@ -83,7 +83,7 @@ https://github.com/user-attachments/assets/81a8f166-cb0e-4df8-8664-62e2f83bae84
 
 ## 💡 Architecture
 
-![RAG Architecture](architecture.png)
+![architecture](https://github.com/user-attachments/assets/18294966-7b50-460a-b692-1a80cb3d49c0)
 
 ## ⚙️ Build from Source
 
